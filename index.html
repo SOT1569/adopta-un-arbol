@@ -24,7 +24,8 @@
       --verde-claro: #3fa966;
       --verde-suave: #7ed4a4;
       --verde-bg: #eaf4ee;
-      --verde-section: #f2f7f3;
+      --verde-section-a: #f2f7f3;
+      --verde-section-b: #e6f2ea;
       --texto: #1c2b22;
       --texto-suave: #4a6255;
       --borde: #d0e4d8;
@@ -133,10 +134,7 @@
       color: white;
     }
 
-    .hero h1 em {
-      color: var(--verde-suave);
-      font-style: italic;
-    }
+    .hero h1 em { color: var(--verde-suave); font-style: italic; }
 
     .hero-sub {
       font-size: 1.1rem;
@@ -171,7 +169,6 @@
     .photo-slot {
       aspect-ratio: 4/3;
       overflow: hidden;
-      position: relative;
     }
 
     .photo-slot img {
@@ -285,7 +282,7 @@
 
     /* ── CUIDADOS ── */
     .bg-section {
-      background: var(--verde-section);
+      background: var(--verde-section-a);
       padding: 4rem 2rem;
     }
 
@@ -324,11 +321,23 @@
       line-height: 1.55;
     }
 
-    /* ── ESPECIES ── */
+    /* ── ESPECIES Y SIEMBRA — secciones alternadas ── */
     .especies-section {
       padding: 4rem 2rem;
       max-width: 800px;
       margin: 0 auto;
+    }
+
+    .section-wrapper-a {
+      background: var(--blanco);
+    }
+
+    .section-wrapper-b {
+      background: var(--verde-section-a);
+    }
+
+    .section-wrapper-c {
+      background: var(--verde-section-b);
     }
 
     .especie-list {
@@ -423,6 +432,8 @@
       overflow: hidden;
       box-shadow: 0 20px 60px #00000033;
       animation: modalIn 0.2s ease;
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
     @keyframes modalIn {
@@ -458,6 +469,80 @@
       opacity: 0.6;
     }
 
+    /* ── CARRUSEL ── */
+    .carrusel {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      background: #b8d4c0;
+    }
+
+    .carrusel-slides {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.3s ease;
+    }
+
+    .carrusel-slide {
+      min-width: 100%;
+      height: 100%;
+    }
+
+    .carrusel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .carrusel-slide .modal-foto-placeholder {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: unset;
+    }
+
+    .carrusel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #00000055;
+      color: white;
+      border: none;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+      z-index: 2;
+    }
+
+    .carrusel-btn:hover { background: #000000aa; }
+    .carrusel-btn.prev { left: 8px; }
+    .carrusel-btn.next { right: 8px; }
+
+    .carrusel-dots {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+
+    .carrusel-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #ffffff66;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .carrusel-dot.active { background: white; }
+
+    /* ── MODAL BODY ── */
     .modal-body { padding: 1.5rem 1.75rem 1.75rem; }
 
     .modal-tag {
@@ -534,37 +619,12 @@
 
     /* ── MAPA ── */
     .map-section {
-      background: var(--verde-section);
+      background: var(--verde-section-b);
       padding: 4rem 2rem;
     }
 
     .map-inner { max-width: 800px; margin: 0 auto; }
-    .map-inner p { color: var(--texto-suave); margin-bottom: 1.5rem; }
-
-    .map-container {
-      width: 100%;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid var(--borde);
-      background: #c8dfc8;
-      aspect-ratio: 16/7;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      color: #4a7a5a;
-    }
-
-    .map-container svg { width: 44px; height: 44px; opacity: 0.4; }
-    .map-container p {
-      font-size: 0.88rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      opacity: 0.65;
-      margin: 0;
-    }
+    .map-inner > p { color: var(--texto-suave); margin-bottom: 1.5rem; }
 
     /* ── FOOTER ── */
     footer {
@@ -593,8 +653,8 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
       nav { padding: 0.75rem 1rem; }
-      .nav-links { gap: 1rem; }
-      .nav-links li:nth-child(n+3) { display: none; }
+      .nav-links { gap: 0.8rem; }
+      .nav-links li:nth-child(n+4) { display: none; }
       .hero { padding: 3.5rem 1.25rem 3rem; }
       .section { padding: 3rem 1.25rem; }
       .bg-section { padding: 3rem 1.25rem; }
@@ -614,6 +674,7 @@
     <ul class="nav-links">
       <li><a href="#iniciativa">La iniciativa</a></li>
       <li><a href="#especies">Especies</a></li>
+      <li><a href="#siembra">Siembra</a></li>
       <li><a href="#escuelas">Escuelas</a></li>
     </ul>
   </nav>
@@ -624,7 +685,6 @@
     <h1>Adoptá<br><em>un árbol</em></h1>
     <img src="fotos/logoMinisterio.png" alt="Ministerio de Ecología Misiones" style="height: auto; width: 70%; max-width: 400px; margin-bottom: 1.5rem;" />
     <p class="hero-sub">En el marco del Día Mundial del Medio Ambiente, el Ministerio de Ecología de Misiones y RNR, a cargo del ministro Arq. Martín Recamán, impulsa <strong>"Adoptá un Árbol"</strong>: una acción de plantación participativa en escuelas de la provincia.</p>
-    <!-- <p class="hero-sub">Una campaña para plantar especies nativas en las escuelas de Misiones</p> -->
     <div class="hero-meta">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <rect x="3" y="4" width="18" height="18" rx="2"/>
@@ -636,12 +696,7 @@
     </div>
   </section>
 
-  <!-- FOTOS
-       Para activar cada foto:
-       1. Descomentá la línea con <img ...>
-       2. Cambiá el nombre del archivo por el correcto
-       3. Borrá el div.photo-placeholder de ese slot
-  -->
+  <!-- FOTOS -->
   <div class="photo-strip">
     <div class="photo-slot">
       <img src="fotos/1_37.JPG" alt="Plantación en escuela" />
@@ -654,20 +709,19 @@
     </div>
   </div>
 
-  <!-- INICIATIVA -->
-  <section id="iniciativa">
+  <!-- INICIATIVA — fondo blanco -->
+  <section id="iniciativa" class="section-wrapper-a">
     <div class="section">
       <div class="section-label">La iniciativa</div>
       <h2>¿De qué se trata?</h2>
-      
       <p>Cada institución recibe un kit completo con todo lo necesario para plantar una especie nativa en su espacio verde, junto con materiales educativos que acompañan el proceso.</p>
     </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- PASOS -->
-  <section>
+  <!-- PASOS — fondo blanco -->
+  <section class="section-wrapper-a">
     <div class="section">
       <div class="section-label">Cómo plantar</div>
       <h2>Instructivo paso a paso</h2>
@@ -716,7 +770,7 @@
     </div>
   </section>
 
-  <!-- CUIDADOS -->
+  <!-- CUIDADOS — fondo verde claro A -->
   <div class="bg-section">
     <div class="bg-section-inner">
       <div class="section-label">Después de plantar</div>
@@ -741,147 +795,253 @@
     </div>
   </div>
 
-  <!-- ESPECIES -->
-  <section id="especies" class="especies-section">
-    <div class="section-label">Catálogo</div>
-    <h2 style="font-family:'Bangers',cursive; font-size:clamp(1.6rem,4vw,2.2rem); font-weight:700; margin-bottom:0.5rem;">Especies nativas para plantar</h2>
-    <p style="color:var(--texto-suave); margin-bottom:0;">Tocá cada especie para ver más información.</p>
+  <!-- ESPECIES — fondo blanco -->
+  <div class="section-wrapper-a">
+    <section id="especies" class="especies-section">
+      <div class="section-label">Catálogo</div>
+      <h2 style="font-family:'Bangers',cursive; font-size:clamp(1.6rem,4vw,2.2rem); font-weight:700; margin-bottom:0.5rem;">Especies nativas para plantar</h2>
+      <p style="color:var(--texto-suave); margin-bottom:0;">Tocá cada especie para ver más información.</p>
 
-    <div class="especie-list">
-
-      <!-- ══════════════════════════════════════════
-           CÓMO AGREGAR LA FOTO DE CADA ÁRBOL:
-           1. Subí la foto a la carpeta fotos/arboles/
-           2. En el modal correspondiente, reemplazá
-              el div.modal-foto-placeholder por:
-              <img class="modal-foto" src="fotos/arboles/NOMBRE.jpg" alt="Nombre del árbol" />
-      ══════════════════════════════════════════ -->
-
-      <div class="especie-row" onclick="abrirModal('modal-1')">
-        <div class="especie-num">1</div>
-        <div class="especie-info">
-          <div class="especie-comun">Lapacho negro</div>
-          <div class="especie-cientifico">Handroanthus heptaphyllus</div>
+      <div class="especie-list">
+        
+        <div class="especie-row" onclick="abrirModal('modal-1')">
+          <div class="especie-num">1</div>
+          <div class="especie-info">
+            <div class="especie-comun">Lapacho negro</div>
+            <div class="especie-cientifico">Handroanthus heptaphyllus</div>
+          </div>
+          <div class="especie-tag">Ornamental</div>
+          <div class="especie-arrow">›</div>
         </div>
-        <div class="especie-tag">Ornamental</div>
-        <div class="especie-arrow">›</div>
-      </div>
 
-      <div class="especie-row" onclick="abrirModal('modal-2')">
-        <div class="especie-num">2</div>
-        <div class="especie-info">
-          <div class="especie-comun">Lapacho amarillo</div>
-          <div class="especie-cientifico">Handroanthus albus</div>
+        <div class="especie-row" onclick="abrirModal('modal-2')">
+          <div class="especie-num">2</div>
+          <div class="especie-info">
+            <div class="especie-comun">Lapacho amarillo</div>
+            <div class="especie-cientifico">Handroanthus albus</div>
+          </div>
+          <div class="especie-tag">Ornamental</div>
+          <div class="especie-arrow">›</div>
         </div>
-        <div class="especie-tag">Ornamental</div>
-        <div class="especie-arrow">›</div>
-      </div>
 
-      <div class="especie-row" onclick="abrirModal('modal-3')">
-        <div class="especie-num">3</div>
-        <div class="especie-info">
-          <div class="especie-comun">Jacarandá</div>
-          <div class="especie-cientifico">Jacaranda mimosifolia</div>
+        <div class="especie-row" onclick="abrirModal('modal-3')">
+          <div class="especie-num">3</div>
+          <div class="especie-info">
+            <div class="especie-comun">Jacarandá</div>
+            <div class="especie-cientifico">Jacaranda mimosifolia</div>
+          </div>
+          <div class="especie-tag">Educativo</div>
+          <div class="especie-arrow">›</div>
         </div>
-        <div class="especie-tag">Educativo</div>
-        <div class="especie-arrow">›</div>
-      </div>
 
-      <div class="especie-row" onclick="abrirModal('modal-4')">
-        <div class="especie-num">4</div>
-        <div class="especie-info">
-          <div class="especie-comun">Jabuticaba</div>
-          <div class="especie-cientifico">Plinia peruviana</div>
+        <div class="especie-row" onclick="abrirModal('modal-4')">
+          <div class="especie-num">4</div>
+          <div class="especie-info">
+            <div class="especie-comun">Jabuticaba</div>
+            <div class="especie-cientifico">Plinia peruviana</div>
+          </div>
+          <div class="especie-tag">Frutal</div>
+          <div class="especie-arrow">›</div>
         </div>
-        <div class="especie-tag">Frutal</div>
-        <div class="especie-arrow">›</div>
-      </div>
 
-      <div class="especie-row" onclick="abrirModal('modal-5')">
-        <div class="especie-num">5</div>
-        <div class="especie-info">
-          <div class="especie-comun">Pitanga</div>
-          <div class="especie-cientifico">Eugenia uniflora</div>
+        <div class="especie-row" onclick="abrirModal('modal-5')">
+          <div class="especie-num">5</div>
+          <div class="especie-info">
+            <div class="especie-comun">Pitanga</div>
+            <div class="especie-cientifico">Eugenia uniflora</div>
+          </div>
+          <div class="especie-tag">Frutal</div>
+          <div class="especie-arrow">›</div>
         </div>
-        <div class="especie-tag">Frutal</div>
-        <div class="especie-arrow">›</div>
-      </div>
 
-      <div class="especie-row" onclick="abrirModal('modal-6')">
-        <div class="especie-num">6</div>
-        <div class="especie-info">
-          <div class="especie-comun">Cañafístula</div>
-          <div class="especie-cientifico">Peltophorum dubium</div>
+        <div class="especie-row" onclick="abrirModal('modal-6')">
+          <div class="especie-num">6</div>
+          <div class="especie-info">
+            <div class="especie-comun">Cañafístula</div>
+            <div class="especie-cientifico">Peltophorum dubium</div>
+          </div>
+          <div class="especie-tag">Paisajismo</div>
+          <div class="especie-arrow">›</div>
         </div>
-        <div class="especie-tag">Paisajismo</div>
-        <div class="especie-arrow">›</div>
-      </div>
 
-      <div class="especie-row" onclick="abrirModal('modal-7')">
-        <div class="especie-num">7</div>
-        <div class="especie-info">
-          <div class="especie-comun">Timbó</div>
-          <div class="especie-cientifico">Enterolobium contortisiliquum</div>
+        <div class="especie-row" onclick="abrirModal('modal-7')">
+          <div class="especie-num">7</div>
+          <div class="especie-info">
+            <div class="especie-comun">Timbó</div>
+            <div class="especie-cientifico">Enterolobium contortisiliquum</div>
+          </div>
+          <div class="especie-tag">Restauración</div>
+          <div class="especie-arrow">›</div>
         </div>
-        <div class="especie-tag">Restauración</div>
-        <div class="especie-arrow">›</div>
-      </div>
 
-      <div class="especie-row" onclick="abrirModal('modal-8')">
-        <div class="especie-num">8</div>
-        <div class="especie-info">
-          <div class="especie-comun">Palo rosa</div>
-          <div class="especie-cientifico">Aspidosperma polyneuron</div>
+        <div class="especie-row" onclick="abrirModal('modal-8')">
+          <div class="especie-num">8</div>
+          <div class="especie-info">
+            <div class="especie-comun">Palo rosa</div>
+            <div class="especie-cientifico">Aspidosperma polyneuron</div>
+          </div>
+          <div class="especie-tag">Conservación</div>
+          <div class="especie-arrow">›</div>
         </div>
-        <div class="especie-tag">Conservación</div>
-        <div class="especie-arrow">›</div>
-      </div>
 
-      <div class="especie-row" onclick="abrirModal('modal-9')">
-        <div class="especie-num">9</div>
-        <div class="especie-info">
-          <div class="especie-comun">Araucaria / Pino Paraná</div>
-          <div class="especie-cientifico">Araucaria angustifolia</div>
+        <div class="especie-row" onclick="abrirModal('modal-9')">
+          <div class="especie-num">9</div>
+          <div class="especie-info">
+            <div class="especie-comun">Araucaria / Pino Paraná</div>
+            <div class="especie-cientifico">Araucaria angustifolia</div>
+          </div>
+          <div class="especie-tag">Conservación</div>
+          <div class="especie-arrow">›</div>
         </div>
-        <div class="especie-tag">Conservación</div>
-        <div class="especie-arrow">›</div>
-      </div>
 
-      <div class="especie-row" onclick="abrirModal('modal-10')">
-        <div class="especie-num">10</div>
-        <div class="especie-info">
-          <div class="especie-comun">Cedro misionero</div>
-          <div class="especie-cientifico">Cedrela fissilis</div>
+        <div class="especie-row" onclick="abrirModal('modal-10')">
+          <div class="especie-num">10</div>
+          <div class="especie-info">
+            <div class="especie-comun">Cedro misionero</div>
+            <div class="especie-cientifico">Cedrela fissilis</div>
+          </div>
+          <div class="especie-tag">Forestal</div>
+          <div class="especie-arrow">›</div>
         </div>
-        <div class="especie-tag">Forestal</div>
-        <div class="especie-arrow">›</div>
-      </div>
 
-      <div class="especie-row" onclick="abrirModal('modal-11')">
-        <div class="especie-num">11</div>
-        <div class="especie-info">
-          <div class="especie-comun">Incienso</div>
-          <div class="especie-cientifico">Myrocarpus frondosus</div>
+        <div class="especie-row" onclick="abrirModal('modal-11')">
+          <div class="especie-num">11</div>
+          <div class="especie-info">
+            <div class="especie-comun">Incienso</div>
+            <div class="especie-cientifico">Myrocarpus frondosus</div>
+          </div>
+          <div class="especie-tag">Forestal</div>
+          <div class="especie-arrow">›</div>
         </div>
-        <div class="especie-tag">Forestal</div>
-        <div class="especie-arrow">›</div>
       </div>
+    </section>
+  </div>
 
+  <!-- SIEMBRA — fondo verde claro B -->
+  <div class="section-wrapper-b">
+    <section id="siembra" class="especies-section">
+      <div class="section-label">Instructivo</div>
+      <h2 style="font-family:'Bangers',cursive; font-size:clamp(1.6rem,4vw,2.2rem); font-weight:700; margin-bottom:0.5rem;">Siembra y producción de mudas</h2>
+      <p style="color:var(--texto-suave); margin-bottom:0;">Tocá cada especie para ver el instructivo de producción.</p>
+
+      <div class="especie-list">
+  
+
+        <div class="especie-row" onclick="abrirModal('modal-s1')">
+          <div class="especie-num">1</div>
+          <div class="especie-info">
+            <div class="especie-comun">Molle</div>
+            <div class="especie-cientifico">Lithraea molleoides</div>
+          </div>
+          <div class="especie-tag">Siembra</div>
+          <div class="especie-arrow">›</div>
+        </div>
+
+        <div class="especie-row" onclick="abrirModal('modal-s2')">
+          <div class="especie-num">2</div>
+          <div class="especie-info">
+            <div class="especie-comun">Schinus terebinthifolia</div>
+            <div class="especie-cientifico">Schinus terebinthifolia</div>
+          </div>
+          <div class="especie-tag">Siembra</div>
+          <div class="especie-arrow">›</div>
+        </div>
+
+        <div class="especie-row" onclick="abrirModal('modal-s3')">
+          <div class="especie-num">3</div>
+          <div class="especie-info">
+            <div class="especie-comun">Jaboncillo / Palo de jabón</div>
+            <div class="especie-cientifico">Sapindus saponaria</div>
+          </div>
+          <div class="especie-tag">Siembra</div>
+          <div class="especie-arrow">›</div>
+        </div>
+
+        <div class="especie-row" onclick="abrirModal('modal-s4')">
+          <div class="especie-num">4</div>
+          <div class="especie-info">
+            <div class="especie-comun">Tipa colorada</div>
+            <div class="especie-cientifico">Pterogyne nitens</div>
+          </div>
+          <div class="especie-tag">Siembra</div>
+          <div class="especie-arrow">›</div>
+        </div>
+
+        <div class="especie-row" onclick="abrirModal('modal-s5')">
+          <div class="especie-num">5</div>
+          <div class="especie-info">
+            <div class="especie-comun">Espina corona</div>
+            <div class="especie-cientifico">Gleditsia amorphoides</div>
+          </div>
+          <div class="especie-tag">Siembra</div>
+          <div class="especie-arrow">›</div>
+        </div>
+
+        <div class="especie-row" onclick="abrirModal('modal-s6')">
+          <div class="especie-num">6</div>
+          <div class="especie-info">
+            <div class="especie-comun">Aguaí</div>
+            <div class="especie-cientifico">Chrysophyllum gonocarpum</div>
+          </div>
+          <div class="especie-tag">Siembra</div>
+          <div class="especie-arrow">›</div>
+        </div>
+
+        <div class="especie-row" onclick="abrirModal('modal-s7')">
+          <div class="especie-num">7</div>
+          <div class="especie-info">
+            <div class="especie-comun">Guatambú</div>
+            <div class="especie-cientifico">Balfourodendron riedelianum</div>
+          </div>
+          <div class="especie-tag">Siembra</div>
+          <div class="especie-arrow">›</div>
+        </div>
+
+        <div class="especie-row" onclick="abrirModal('modal-s8')">
+          <div class="especie-num">8</div>
+          <div class="especie-info">
+            <div class="especie-comun">Yerba mate</div>
+            <div class="especie-cientifico">Ilex paraguariensis</div>
+          </div>
+          <div class="especie-tag">Siembra</div>
+          <div class="especie-arrow">›</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- MAPA — fondo verde claro C -->
+  <section id="escuelas" class="map-section">
+    <div class="map-inner">
+      <div class="section-label">Dónde ocurre</div>
+      <h2 style="font-family:'Bangers',cursive; font-size:clamp(1.6rem,4vw,2.2rem); font-weight:700; margin-bottom:0.75rem;">Escuelas participantes</h2>
+      <p>Mapa interactivo con todas las instituciones que reciben el kit de plantación en esta edición.</p>
+      <iframe
+        src="https://umap.openstreetmap.fr/es/map/mapa-sin-titulo_1408896"
+        width="100%" height="420"
+        style="border:0; border-radius:14px; display:block;"
+        allowfullscreen loading="lazy">
+      </iframe>
     </div>
   </section>
 
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Ministerio de Ecología y Recursos Naturales Renovables · Misiones</div>
+    <div class="footer-divider"></div>
+    <p>San Lorenzo 1538 · Posadas, Misiones</p>
+    <p>+54 376 4447590</p>
+    <p><a href="https://ecologia.misiones.gob.ar/" target="_blank" rel="noopener">ecologia.misiones.gob.ar</a></p>
+  </footer>
+
   <!-- ══════════════════════════════════════════
-       MODALES — uno por especie
-       Para agregar foto: reemplazá div.modal-foto-placeholder por:
-       <img class="modal-foto" src="fotos/arboles/NOMBRE.jpg" alt="Nombre" />
+       MODALES ESPECIES (modal-1 a modal-11)
   ══════════════════════════════════════════ -->
 
   <div class="modal-overlay" id="modal-1" onclick="cerrarOverlay(event,'modal-1')">
     <div class="modal">
       <img class="modal-foto" src="fotos/arboles/lapachoNegro.jpg" alt="Lapacho negro" />
-      <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
       <div class="modal-body">
-        
         <div class="modal-nombre">Lapacho negro</div>
         <div class="modal-cientifico">Handroanthus heptaphyllus</div>
         <p class="modal-desc">Árbol de gran porte con copa amplia y flores rosadas que aparecen cuando pierde las hojas. La corteza es oscura y agrietada.</p>
@@ -898,9 +1058,7 @@
   <div class="modal-overlay" id="modal-2" onclick="cerrarOverlay(event,'modal-2')">
     <div class="modal">
       <img class="modal-foto" src="fotos/arboles/lapachoAmarillo.png" alt="Lapacho amarillo" />
-      <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
       <div class="modal-body">
-        <div class="modal-tag">Ornamental · Forestal</div>
         <div class="modal-nombre">Lapacho amarillo</div>
         <div class="modal-cientifico">Handroanthus albus</div>
         <p class="modal-desc">Árbol de gran porte con copa redondeada y floración amarilla intensa muy llamativa. Se reconoce fácilmente cuando pierde las hojas.</p>
@@ -917,9 +1075,7 @@
   <div class="modal-overlay" id="modal-3" onclick="cerrarOverlay(event,'modal-3')">
     <div class="modal">
       <img class="modal-foto" src="fotos/arboles/jacaranda.png" alt="Jacarandá" />
-      <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
       <div class="modal-body">
-        <div class="modal-tag">Educativo · Ornamental</div>
         <div class="modal-nombre">Jacarandá</div>
         <div class="modal-cientifico">Jacaranda mimosifolia</div>
         <p class="modal-desc">Árbol mediano a grande con hojas finas y muy divididas similares a helechos. Produce flores lilas o azuladas en racimos muy vistosos.</p>
@@ -936,9 +1092,7 @@
   <div class="modal-overlay" id="modal-4" onclick="cerrarOverlay(event,'modal-4')">
     <div class="modal">
       <img class="modal-foto" src="fotos/arboles/jabuticaba.png" alt="Jabuticaba" />
-      <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
       <div class="modal-body">
-        <div class="modal-tag">Frutal · Educativo</div>
         <div class="modal-nombre">Jabuticaba</div>
         <div class="modal-cientifico">Plinia peruviana</div>
         <p class="modal-desc">Árbol pequeño de follaje verde brillante. Sus frutos negros y redondos nacen directamente sobre el tronco y las ramas.</p>
@@ -955,9 +1109,7 @@
   <div class="modal-overlay" id="modal-5" onclick="cerrarOverlay(event,'modal-5')">
     <div class="modal">
       <img class="modal-foto" src="fotos/arboles/pitanga.png" alt="Pitanga" />
-      <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
       <div class="modal-body">
-        <div class="modal-tag">Frutal · Ornamental</div>
         <div class="modal-nombre">Pitanga</div>
         <div class="modal-cientifico">Eugenia uniflora</div>
         <p class="modal-desc">Arbusto o árbol pequeño con hojas brillantes y aromáticas. Produce frutos rojos acanalados muy llamativos, comestibles y atractivos para aves.</p>
@@ -974,9 +1126,7 @@
   <div class="modal-overlay" id="modal-6" onclick="cerrarOverlay(event,'modal-6')">
     <div class="modal">
       <img class="modal-foto" src="fotos/arboles/canafistula.png" alt="Cañafístula" />
-      <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
       <div class="modal-body">
-        <div class="modal-tag">Paisajismo · Ornamental</div>
         <div class="modal-nombre">Cañafístula</div>
         <div class="modal-cientifico">Peltophorum dubium</div>
         <p class="modal-desc">Árbol nativo de gran porte, reconocido por su floración amarilla durante el verano. Posee valor ornamental, forestal y usos tradicionales.</p>
@@ -993,9 +1143,7 @@
   <div class="modal-overlay" id="modal-7" onclick="cerrarOverlay(event,'modal-7')">
     <div class="modal">
       <img class="modal-foto" src="fotos/arboles/timbo.png" alt="Timbó" />
-      <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
       <div class="modal-body">
-        <div class="modal-tag">Restauración · Sombra</div>
         <div class="modal-nombre">Timbó</div>
         <div class="modal-cientifico">Enterolobium contortisiliquum</div>
         <p class="modal-desc">Árbol de gran tamaño con copa muy amplia. Sus frutos tienen forma de oreja o espiral, característica que facilita su identificación.</p>
@@ -1012,9 +1160,7 @@
   <div class="modal-overlay" id="modal-8" onclick="cerrarOverlay(event,'modal-8')">
     <div class="modal">
       <img class="modal-foto" src="fotos/arboles/paloRosa.png" alt="Palo rosa" />
-      <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
       <div class="modal-body">
-        <div class="modal-tag">Conservación</div>
         <div class="modal-nombre">Palo rosa</div>
         <div class="modal-cientifico">Aspidosperma polyneuron</div>
         <p class="modal-desc">Árbol de gran porte y tronco recto con hojas simples brillantes y corteza grisácea. Su madera presenta tonalidades rosadas características.</p>
@@ -1031,9 +1177,7 @@
   <div class="modal-overlay" id="modal-9" onclick="cerrarOverlay(event,'modal-9')">
     <div class="modal">
       <img class="modal-foto" src="fotos/arboles/araucaria.png" alt="Araucaria" />
-      <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
       <div class="modal-body">
-        <div class="modal-tag">Conservación · Alimenticio</div>
         <div class="modal-nombre">Araucaria / Pino Paraná</div>
         <div class="modal-cientifico">Araucaria angustifolia</div>
         <p class="modal-desc">Conífera de gran altura con forma de copa característica, ramas horizontales y hojas rígidas y puntiagudas. Sus piñones son comestibles.</p>
@@ -1050,9 +1194,7 @@
   <div class="modal-overlay" id="modal-10" onclick="cerrarOverlay(event,'modal-10')">
     <div class="modal">
       <img class="modal-foto" src="fotos/arboles/cedroMisionero.png" alt="Cedro misionero" />
-      <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
       <div class="modal-body">
-        <div class="modal-tag">Forestal · Maderero</div>
         <div class="modal-nombre">Cedro misionero</div>
         <div class="modal-cientifico">Cedrela fissilis</div>
         <p class="modal-desc">Árbol alto de tronco recto y hojas compuestas aromáticas. Presenta corteza fisurada y frutos leñosos que liberan semillas aladas.</p>
@@ -1069,9 +1211,7 @@
   <div class="modal-overlay" id="modal-11" onclick="cerrarOverlay(event,'modal-11')">
     <div class="modal">
       <img class="modal-foto" src="fotos/arboles/incienso.png" alt="Incienso" />
-      <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
       <div class="modal-body">
-        <div class="modal-tag">Forestal · Aromático</div>
         <div class="modal-nombre">Incienso</div>
         <div class="modal-cientifico">Myrocarpus frondosus</div>
         <p class="modal-desc">Árbol mediano a grande con hojas compuestas y aroma característico en la madera y corteza. Produce pequeñas flores claras.</p>
@@ -1085,40 +1225,281 @@
     </div>
   </div>
 
-  <!-- MAPA -->
-  <section id="escuelas" class="map-section">
-    <div class="map-inner">
-      <div class="section-label">Dónde ocurre</div>
-      <h2 style="font-family:'Bangers',cursive; font-size:clamp(1.6rem,4vw,2.2rem); font-weight:700; margin-bottom:0.75rem;">Escuelas participantes</h2>
-      <p>Mapa interactivo con todas las instituciones que reciben el kit de plantación en esta edición.</p>
-      
-           <iframe
-             src="https://umap.openstreetmap.fr/es/map/mapa-sin-titulo_1408896"
-             width="100%" height="420"
-             style="border:0; border-radius:14px; display:block;"
-             allowfullscreen loading="lazy">
-           </iframe>
-     
-      <!-- <div class="map-container">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
-          <circle cx="12" cy="9" r="2.5"/>
-        </svg>
-        <p>Mapa de escuelas · Próximamente</p>
-      </div> -->
-    </div>
-  </section>
+  <!-- ══════════════════════════════════════════
+       MODALES SIEMBRA (modal-s1 a modal-s8)
+       Carrusel de hasta 2 fotos.
+       CÓMO AGREGAR FOTOS:
+       - Subí las fotos a fotos/semillas/
+       - Reemplazá cada div.modal-foto-placeholder por:
+         <img src="fotos/semillas/NOMBRE-1.jpg" alt="Nombre" />
+       - Si solo tiene 1 foto, borrá el segundo .carrusel-slide,
+         los botones .prev/.next y los .carrusel-dots
+  ══════════════════════════════════════════ -->
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">Ministerio de Ecología y Recursos Naturales Renovables · Misiones</div>
-    <div class="footer-divider"></div>
-    <p>San Lorenzo 1538 · Posadas, Misiones</p>
-    <p>+54 376 4447590</p>
-    <p><a href="https://ecologia.misiones.gob.ar/" target="_blank" rel="noopener">ecologia.misiones.gob.ar</a></p>
-  </footer>
+  <!-- MODAL S1: Molle -->
+  <div class="modal-overlay" id="modal-s1" onclick="cerrarOverlay(event,'modal-s1')">
+    <div class="modal">
+      <div class="carrusel" id="carrusel-s1">
+        <div class="carrusel-slides" id="slides-s1">
+          <div class="carrusel-slide">
+            <img src="fotos/semillas/molle-1.png" alt="Molle"/>
+            <!-- foto: src="fotos/semillas/molle-1.jpg" -->
+            <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
+          </div>
+          <div class="carrusel-slide">
+            <img src="fotos/semillas/molle-2.png" alt="Molle" />
+            <!-- foto: src="fotos/semillas/molle-2.jpg" -->
+            <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
+          </div>
+        </div>
+        <button class="carrusel-btn prev" onclick="moverCarrusel('s1',-1)">‹</button>
+        <button class="carrusel-btn next" onclick="moverCarrusel('s1',1)">›</button>
+        <div class="carrusel-dots">
+          <div class="carrusel-dot active" onclick="irSlide('s1',0)"></div>
+          <div class="carrusel-dot" onclick="irSlide('s1',1)"></div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-nombre">Molle</div>
+        <div class="modal-cientifico">Lithraea molleoides</div>
+        <p class="modal-desc">Colocar semillas o frutos recién cosechados en canteros semisombreados con sustrato órgano-arcilloso. Cubrir levemente y regar diariamente. Emergencia entre 8 y 12 días. Tasa de germinación superior al 80%. Trasplantar cuando las mudas alcancen 4–5 cm. Puede alcanzar 3 m a los dos años.</p>
+        <button class="modal-cerrar" onclick="cerrarModal('modal-s1')">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL S2: Schinus terebinthifolia -->
+  <div class="modal-overlay" id="modal-s2" onclick="cerrarOverlay(event,'modal-s2')">
+    <div class="modal">
+      <div class="carrusel" id="carrusel-s2">
+        <div class="carrusel-slides" id="slides-s2">
+          <div class="carrusel-slide">
+            <img src="fotos/semillas/schinus-1.png" alt="Schinus" />
+            <!-- foto: src="fotos/semillas/schinus-1.jpg" -->
+            <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
+          </div>
+          
+        </div>
+        <button class="carrusel-btn prev" onclick="moverCarrusel('s2',-1)">‹</button>
+        <button class="carrusel-btn next" onclick="moverCarrusel('s2',1)">›</button>
+        <div class="carrusel-dots">
+          <div class="carrusel-dot active" onclick="irSlide('s2',0)"></div>
+          <div class="carrusel-dot" onclick="irSlide('s2',1)"></div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-nombre">Schinus terebinthifolia</div>
+        <div class="modal-cientifico">Schinus terebinthifolia</div>
+        <p class="modal-desc">Colocar semillas recién cosechadas en canteros a pleno sol con sustrato arcilloso. Emergencia entre 10 y 15 días. Germinación superior al 50%. Trasplantar cuando las mudas alcancen 5–6 cm. Llevar al lugar definitivo luego de 3–4 meses. Presenta crecimiento rápido en campo.</p>
+        <button class="modal-cerrar" onclick="cerrarModal('modal-s2')">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL S3: Jaboncillo -->
+  <div class="modal-overlay" id="modal-s3" onclick="cerrarOverlay(event,'modal-s3')">
+    <div class="modal">
+      <div class="carrusel" id="carrusel-s3">
+        <div class="carrusel-slides" id="slides-s3">
+          <div class="carrusel-slide">
+            <img src="fotos/semillas/jaboncillo-1.png" alt="Jaboncillo" />
+            <!-- foto: src="fotos/semillas/jaboncillo-1.jpg" -->
+            <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
+          </div>
+          <div class="carrusel-slide">
+            <img src="fotos/semillas/jaboncillo-2.png" alt="Jaboncillo" />
+
+            <!-- foto: src="fotos/semillas/jaboncillo-2.jpg" -->
+            <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
+          </div>
+        </div>
+        <button class="carrusel-btn prev" onclick="moverCarrusel('s3',-1)">‹</button>
+        <button class="carrusel-btn next" onclick="moverCarrusel('s3',1)">›</button>
+        <div class="carrusel-dots">
+          <div class="carrusel-dot active" onclick="irSlide('s3',0)"></div>
+          <div class="carrusel-dot" onclick="irSlide('s3',1)"></div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-nombre">Jaboncillo / Palo de jabón</div>
+        <div class="modal-cientifico">Sapindus saponaria</div>
+        <p class="modal-desc">Sembrar semillas recién cosechadas sin tratamiento previo en recipientes individuales con sustrato órgano-arenoso en ambiente semisombreado. Cubrir con 0,5 cm de sustrato. Regar dos veces al día. Emergencia entre 20 y 40 días. Germinación moderada a baja. Puede alcanzar 2,5 m de altura a los dos años.</p>
+        <button class="modal-cerrar" onclick="cerrarModal('modal-s3')">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL S4: Tipa colorada -->
+  <div class="modal-overlay" id="modal-s4" onclick="cerrarOverlay(event,'modal-s4')">
+    <div class="modal">
+      <div class="carrusel" id="carrusel-s4">
+        <div class="carrusel-slides" id="slides-s4">
+          <div class="carrusel-slide">
+            <img src="fotos/semillas/tipa-colorada-1.png" alt="Tipa Colorada" />
+
+            <!-- foto: src="fotos/semillas/tipa-colorada-1.jpg" -->
+            <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
+          </div>
+          <div class="carrusel-slide">
+            <img src="fotos/semillas/tipa-colorada-2.png" alt="Tipa Colorada" />
+
+            <!-- foto: src="fotos/semillas/tipa-colorada-2.jpg" -->
+            <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
+          </div>
+        </div>
+        <button class="carrusel-btn prev" onclick="moverCarrusel('s4',-1)">‹</button>
+        <button class="carrusel-btn next" onclick="moverCarrusel('s4',1)">›</button>
+        <div class="carrusel-dots">
+          <div class="carrusel-dot active" onclick="irSlide('s4',0)"></div>
+          <div class="carrusel-dot" onclick="irSlide('s4',1)"></div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-nombre">Tipa colorada</div>
+        <div class="modal-cientifico">Pterogyne nitens</div>
+        <p class="modal-desc">Sembrar en canteros semisombreados con sustrato órgano-arenoso. Cubrir con 0,5 cm de sustrato tamizado. Regar diariamente. Emergencia entre 4 y 10 días. Germinación entre 60% y 90%. Trasplantar cuando las plantas alcancen 4–5 cm. Desarrollo rápido en campo.</p>
+        <button class="modal-cerrar" onclick="cerrarModal('modal-s4')">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL S5: Espina corona -->
+  <div class="modal-overlay" id="modal-s5" onclick="cerrarOverlay(event,'modal-s5')">
+    <div class="modal">
+      <div class="carrusel" id="carrusel-s5">
+        <div class="carrusel-slides" id="slides-s5">
+          <div class="carrusel-slide">
+            <img src="fotos/semillas/espina-corona-1.png" alt="Espina Corona" />
+            <!-- foto: src="fotos/semillas/espina-corona-1.jpg" -->
+            <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
+          </div>
+          <div class="carrusel-slide">
+            <img src="fotos/semillas/espina-corona-2.png" alt="Espina Corona" />
+            
+            <!-- foto: src="fotos/semillas/espina-corona-2.jpg" -->
+            <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
+          </div>
+        </div>
+        <button class="carrusel-btn prev" onclick="moverCarrusel('s5',-1)">‹</button>
+        <button class="carrusel-btn next" onclick="moverCarrusel('s5',1)">›</button>
+        <div class="carrusel-dots">
+          <div class="carrusel-dot active" onclick="irSlide('s5',0)"></div>
+          <div class="carrusel-dot" onclick="irSlide('s5',1)"></div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-nombre">Espina corona</div>
+        <div class="modal-cientifico">Gleditsia amorphoides</div>
+        <p class="modal-desc">Escarificar las semillas antes de la siembra. Sembrar en canteros semisombreados cubiertos con fina capa de sustrato. Regar dos veces al día. La emergencia ocurre entre 4 y 5 meses. Trasplantar cuando las mudas alcancen tamaño adecuado. Desarrollo moderado en campo.</p>
+        <button class="modal-cerrar" onclick="cerrarModal('modal-s5')">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL S6: Aguaí -->
+  <div class="modal-overlay" id="modal-s6" onclick="cerrarOverlay(event,'modal-s6')">
+    <div class="modal">
+      <div class="carrusel" id="carrusel-s6">
+        <div class="carrusel-slides" id="slides-s6">
+          <div class="carrusel-slide">
+            <img src="fotos/semillas/aguai-1.png" alt="Aguai" />
+
+            <!-- foto: src="fotos/semillas/aguai-1.jpg" -->
+            <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
+          </div>
+          <div class="carrusel-slide">
+            <img src="fotos/semillas/aguai-2.png" alt="Aguai" />
+
+            <!-- foto: src="fotos/semillas/aguai-2.jpg" -->
+            <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
+          </div>
+        </div>
+        <button class="carrusel-btn prev" onclick="moverCarrusel('s6',-1)">‹</button>
+        <button class="carrusel-btn next" onclick="moverCarrusel('s6',1)">›</button>
+        <div class="carrusel-dots">
+          <div class="carrusel-dot active" onclick="irSlide('s6',0)"></div>
+          <div class="carrusel-dot" onclick="irSlide('s6',1)"></div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-nombre">Aguaí</div>
+        <div class="modal-cientifico">Chrysophyllum gonocarpum</div>
+        <p class="modal-desc">Colocar las semillas para germinación inmediatamente después de la cosecha. Sembrar en canteros semisombreados con sustrato órgano-arcilloso. Mantener riego frecuente. Emergencia entre 20 y 30 días. Desarrollo moderado. Puede alcanzar 2 m de altura a los dos años.</p>
+        <button class="modal-cerrar" onclick="cerrarModal('modal-s6')">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL S7: Guatambú -->
+  <div class="modal-overlay" id="modal-s7" onclick="cerrarOverlay(event,'modal-s7')">
+    <div class="modal">
+      <div class="carrusel" id="carrusel-s7">
+        <div class="carrusel-slides" id="slides-s7">
+          <div class="carrusel-slide">
+            <img src="fotos/semillas/guatambu-1.png" alt="Guatambú" />
+
+            <!-- foto: src="fotos/semillas/guatambu-1.jpg" -->
+            <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
+          </div>
+          <div class="carrusel-slide">
+            <img src="fotos/semillas/guatambu-2.png" alt="Guatambú" />
+
+            <!-- foto: src="fotos/semillas/guatambu-2.jpg" -->
+            <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
+          </div>
+        </div>
+        <button class="carrusel-btn prev" onclick="moverCarrusel('s7',-1)">‹</button>
+        <button class="carrusel-btn next" onclick="moverCarrusel('s7',1)">›</button>
+        <div class="carrusel-dots">
+          <div class="carrusel-dot active" onclick="irSlide('s7',0)"></div>
+          <div class="carrusel-dot" onclick="irSlide('s7',1)"></div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-nombre">Guatambú</div>
+        <div class="modal-cientifico">Balfourodendron riedelianum</div>
+        <p class="modal-desc">Colocar los frutos recién cosechados para germinación. Utilizar canteros semisombreados con sustrato órgano-arcilloso. Regar dos veces al día. Emergencia entre 25 y 45 días. La germinación varía entre 0% y 90% — el éxito es altamente impredecible. Crecimiento rápido.</p>
+        <button class="modal-cerrar" onclick="cerrarModal('modal-s7')">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL S8: Yerba mate -->
+  <div class="modal-overlay" id="modal-s8" onclick="cerrarOverlay(event,'modal-s8')">
+    <div class="modal">
+      <div class="carrusel" id="carrusel-s8">
+        <div class="carrusel-slides" id="slides-s8">
+          <div class="carrusel-slide">
+            <img src="fotos/semillas/yerba-mate-1.png" alt="Yerba Mate" />
+
+            <!-- foto: src="fotos/semillas/yerba-mate-1.jpg" -->
+            <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
+          </div>
+          <div class="carrusel-slide">
+            <img src="fotos/semillas/yerba-mate-2.png" alt="Yerba Mate" />
+
+            <!-- foto: src="fotos/semillas/yerba-mate-2.jpg" -->
+            <!-- <div class="modal-foto-placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Foto próximamente</span></div> -->
+          </div>
+        </div>
+        <button class="carrusel-btn prev" onclick="moverCarrusel('s8',-1)">‹</button>
+        <button class="carrusel-btn next" onclick="moverCarrusel('s8',1)">›</button>
+        <div class="carrusel-dots">
+          <div class="carrusel-dot active" onclick="irSlide('s8',0)"></div>
+          <div class="carrusel-dot" onclick="irSlide('s8',1)"></div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-nombre">Yerba mate</div>
+        <div class="modal-cientifico">Ilex paraguariensis</div>
+        <p class="modal-desc">Las semillas requieren estratificación en arena húmeda durante 7–8 meses. Sembrar luego en canteros o almácigos. La emergencia es lenta y desuniforme. El porcentaje de germinación suele ser bajo (20%). Las mudas tardan aproximadamente 11 meses en estar listas para trasplante.</p>
+        <button class="modal-cerrar" onclick="cerrarModal('modal-s8')">Cerrar</button>
+      </div>
+    </div>
+  </div>
 
   <script>
+    /* ── Modales ── */
     function abrirModal(id) {
       document.getElementById(id).classList.add('active');
       document.body.style.overflow = 'hidden';
@@ -1130,9 +1511,7 @@
     }
 
     function cerrarOverlay(event, id) {
-      if (event.target === document.getElementById(id)) {
-        cerrarModal(id);
-      }
+      if (event.target === document.getElementById(id)) cerrarModal(id);
     }
 
     document.addEventListener('keydown', function(e) {
@@ -1143,6 +1522,31 @@
         document.body.style.overflow = '';
       }
     });
+
+    /* ── Carrusel ── */
+    var carruselIndex = {};
+
+    function moverCarrusel(id, dir) {
+      var slides = document.getElementById('slides-' + id);
+      var total = slides.children.length;
+      if (!carruselIndex[id]) carruselIndex[id] = 0;
+      carruselIndex[id] = (carruselIndex[id] + dir + total) % total;
+      actualizarCarrusel(id);
+    }
+
+    function irSlide(id, idx) {
+      carruselIndex[id] = idx;
+      actualizarCarrusel(id);
+    }
+
+    function actualizarCarrusel(id) {
+      var idx = carruselIndex[id] || 0;
+      document.getElementById('slides-' + id).style.transform = 'translateX(-' + (idx * 100) + '%)';
+      var dots = document.querySelectorAll('#carrusel-' + id + ' .carrusel-dot');
+      dots.forEach(function(d, i) {
+        d.classList.toggle('active', i === idx);
+      });
+    }
   </script>
 
 </body>
